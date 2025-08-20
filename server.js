@@ -41,6 +41,7 @@ async function initializeDatabase() {
     const result = db.exec("SELECT * FROM users WHERE username = 'admin'");
     if (!result.length) {
       db.run("INSERT INTO users (username, password, role) VALUES (?, ?, ?)", ['admin', 'admin123', 'admin']);
+      db.run("INSERT INTO users (username, password, role) VALUES (?, ?, ?)", ['reader', 'reader123', 'reader']);
     }
     
     console.log('Database initialized successfully');

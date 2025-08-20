@@ -8,6 +8,7 @@ interface AddServiceModalProps {
   onAdd: (service: Omit<Service, 'id' | 'lastCheck' | 'isActive'>) => void;
   onUpdate: (service: Service) => void;
   editingService: Service | null;
+  darkMode: boolean;
 }
 
 const CLOUD_PROVIDERS = [
@@ -32,7 +33,7 @@ const DEFAULT_FORM_DATA = {
   supportedBy: '',
 };
 
-export function AddServiceModal({ isOpen, onClose, onAdd, onUpdate, editingService }: AddServiceModalProps) {
+export function AddServiceModal({ isOpen, onClose, onAdd, onUpdate, editingService, darkMode }: AddServiceModalProps) {
   const [formData, setFormData] = useState(DEFAULT_FORM_DATA);
 
   useEffect(() => {
@@ -70,19 +71,27 @@ export function AddServiceModal({ isOpen, onClose, onAdd, onUpdate, editingServi
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4">
-      <div className="bg-white rounded-lg w-full max-w-md">
+      <div className={`rounded-lg w-full max-w-md ${
+        darkMode ? 'bg-gray-800' : 'bg-white'
+      }`}>
         <div className="flex items-center justify-between p-6 border-b">
-          <h2 className="text-xl font-semibold text-gray-800">
+          <h2 className={`text-xl font-semibold ${
+            darkMode ? 'text-white' : 'text-gray-800'
+          }`}>
             {editingService ? 'Edit Service' : 'Add New Service'}
           </h2>
-          <button onClick={onClose} className="text-gray-500 hover:text-gray-700">
+          <button onClick={onClose} className={`${
+            darkMode ? 'text-gray-400 hover:text-gray-300' : 'text-gray-500 hover:text-gray-700'
+          }`}>
             <X className="w-5 h-5" />
           </button>
         </div>
 
         <form onSubmit={handleSubmit} className="p-6 space-y-4">
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
+            <label className={`block text-sm font-medium mb-1 ${
+              darkMode ? 'text-gray-300' : 'text-gray-700'
+            }`}>
               Service Name
             </label>
             <input
@@ -90,13 +99,17 @@ export function AddServiceModal({ isOpen, onClose, onAdd, onUpdate, editingServi
               required
               value={formData.name}
               onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-              className="w-full px-3 py-2 border rounded-md focus:ring-blue-500 focus:border-blue-500"
+              className={`w-full px-3 py-2 border rounded-md focus:ring-blue-500 focus:border-blue-500 ${
+                darkMode ? 'bg-gray-700 border-gray-600 text-white' : 'bg-white border-gray-300 text-gray-900'
+              }`}
               placeholder="e.g., API Server"
             />
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
+            <label className={`block text-sm font-medium mb-1 ${
+              darkMode ? 'text-gray-300' : 'text-gray-700'
+            }`}>
               Project Name
             </label>
             <input
@@ -104,13 +117,17 @@ export function AddServiceModal({ isOpen, onClose, onAdd, onUpdate, editingServi
               required
               value={formData.projectName}
               onChange={(e) => setFormData({ ...formData, projectName: e.target.value })}
-              className="w-full px-3 py-2 border rounded-md focus:ring-blue-500 focus:border-blue-500"
+              className={`w-full px-3 py-2 border rounded-md focus:ring-blue-500 focus:border-blue-500 ${
+                darkMode ? 'bg-gray-700 border-gray-600 text-white' : 'bg-white border-gray-300 text-gray-900'
+              }`}
               placeholder="e.g., E-commerce Platform"
             />
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
+            <label className={`block text-sm font-medium mb-1 ${
+              darkMode ? 'text-gray-300' : 'text-gray-700'
+            }`}>
               IP Address
             </label>
             <input
@@ -118,13 +135,17 @@ export function AddServiceModal({ isOpen, onClose, onAdd, onUpdate, editingServi
               required
               value={formData.ip}
               onChange={(e) => setFormData({ ...formData, ip: e.target.value })}
-              className="w-full px-3 py-2 border rounded-md focus:ring-blue-500 focus:border-blue-500"
+              className={`w-full px-3 py-2 border rounded-md focus:ring-blue-500 focus:border-blue-500 ${
+                darkMode ? 'bg-gray-700 border-gray-600 text-white' : 'bg-white border-gray-300 text-gray-900'
+              }`}
               placeholder="e.g., 192.168.1.100"
             />
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
+            <label className={`block text-sm font-medium mb-1 ${
+              darkMode ? 'text-gray-300' : 'text-gray-700'
+            }`}>
               URL
             </label>
             <input
@@ -132,20 +153,26 @@ export function AddServiceModal({ isOpen, onClose, onAdd, onUpdate, editingServi
               required
               value={formData.url}
               onChange={(e) => setFormData({ ...formData, url: e.target.value })}
-              className="w-full px-3 py-2 border rounded-md focus:ring-blue-500 focus:border-blue-500"
+              className={`w-full px-3 py-2 border rounded-md focus:ring-blue-500 focus:border-blue-500 ${
+                darkMode ? 'bg-gray-700 border-gray-600 text-white' : 'bg-white border-gray-300 text-gray-900'
+              }`}
               placeholder="e.g., https://api.example.com"
             />
           </div>
 
           <div className="grid grid-cols-2 gap-4">
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
+              <label className={`block text-sm font-medium mb-1 ${
+                darkMode ? 'text-gray-300' : 'text-gray-700'
+              }`}>
                 Cloud Provider
               </label>
               <select
                 value={formData.cloudProvider}
                 onChange={(e) => setFormData({ ...formData, cloudProvider: e.target.value })}
-                className="w-full px-3 py-2 border rounded-md focus:ring-blue-500 focus:border-blue-500"
+                className={`w-full px-3 py-2 border rounded-md focus:ring-blue-500 focus:border-blue-500 ${
+                  darkMode ? 'bg-gray-700 border-gray-600 text-white' : 'bg-white border-gray-300 text-gray-900'
+                }`}
               >
                 {CLOUD_PROVIDERS.map(provider => (
                   <option key={provider} value={provider}>
@@ -156,7 +183,9 @@ export function AddServiceModal({ isOpen, onClose, onAdd, onUpdate, editingServi
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
+              <label className={`block text-sm font-medium mb-1 ${
+                darkMode ? 'text-gray-300' : 'text-gray-700'
+              }`}>
                 Monthly Cost ($)
               </label>
               <input
@@ -166,14 +195,18 @@ export function AddServiceModal({ isOpen, onClose, onAdd, onUpdate, editingServi
                 required
                 value={formData.monthlyCost}
                 onChange={(e) => setFormData({ ...formData, monthlyCost: parseFloat(e.target.value) })}
-                className="w-full px-3 py-2 border rounded-md focus:ring-blue-500 focus:border-blue-500"
+                className={`w-full px-3 py-2 border rounded-md focus:ring-blue-500 focus:border-blue-500 ${
+                  darkMode ? 'bg-gray-700 border-gray-600 text-white' : 'bg-white border-gray-300 text-gray-900'
+                }`}
                 placeholder="0.00"
               />
             </div>
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
+            <label className={`block text-sm font-medium mb-1 ${
+              darkMode ? 'text-gray-300' : 'text-gray-700'
+            }`}>
               Supported By
             </label>
             <input
@@ -181,19 +214,25 @@ export function AddServiceModal({ isOpen, onClose, onAdd, onUpdate, editingServi
               required
               value={formData.supportedBy}
               onChange={(e) => setFormData({ ...formData, supportedBy: e.target.value })}
-              className="w-full px-3 py-2 border rounded-md focus:ring-blue-500 focus:border-blue-500"
+              className={`w-full px-3 py-2 border rounded-md focus:ring-blue-500 focus:border-blue-500 ${
+                darkMode ? 'bg-gray-700 border-gray-600 text-white' : 'bg-white border-gray-300 text-gray-900'
+              }`}
               placeholder="e.g., DevOps Team"
             />
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
+            <label className={`block text-sm font-medium mb-1 ${
+              darkMode ? 'text-gray-300' : 'text-gray-700'
+            }`}>
               Description
             </label>
             <textarea
               value={formData.description}
               onChange={(e) => setFormData({ ...formData, description: e.target.value })}
-              className="w-full px-3 py-2 border rounded-md focus:ring-blue-500 focus:border-blue-500"
+              className={`w-full px-3 py-2 border rounded-md focus:ring-blue-500 focus:border-blue-500 ${
+                darkMode ? 'bg-gray-700 border-gray-600 text-white' : 'bg-white border-gray-300 text-gray-900'
+              }`}
               rows={3}
               placeholder="Service description..."
             />
@@ -203,7 +242,11 @@ export function AddServiceModal({ isOpen, onClose, onAdd, onUpdate, editingServi
             <button
               type="button"
               onClick={onClose}
-              className="px-4 py-2 text-gray-700 bg-gray-100 rounded-md hover:bg-gray-200"
+              className={`px-4 py-2 rounded-md ${
+                darkMode 
+                  ? 'text-gray-300 bg-gray-700 hover:bg-gray-600' 
+                  : 'text-gray-700 bg-gray-100 hover:bg-gray-200'
+              }`}
             >
               Cancel
             </button>
